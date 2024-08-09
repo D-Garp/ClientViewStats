@@ -1,0 +1,15 @@
+﻿@model ClientViewStats.Models.UsersModel
+
+<div>
+    <h4>Users</h4>
+    <hr />
+    <div><a href="/ClientView/Users">Refresh</a></div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfUsers)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfUsers)
+        </dd>
+    </dl>
+</div>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ClientViewStats.ClientViewModel>
+
+@{
+    ViewData["Title"] = "Client View";
+}
+
+<h1>Client View</h1>
+<p>
+    <a href="/ClientView/ClientView">Refresh</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateRegistered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfUsers)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                 @Html.DisplayFor(modelItem => item.DateRegistered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfUsers)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<p>
+
+    <a href="/ClientView/Registration">Registration Date Stats</a>
+    <br />
+    <a href="/ClientView/Locations">Location Stats</a>
+    <br />
+    <a href="/ClientView/Users">Users Stats</a>
+    <br />
+
+</p>
+
+
