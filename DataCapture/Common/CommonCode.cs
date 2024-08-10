@@ -7,7 +7,8 @@ namespace ClientDataConsole
 { 
     public class Common
     {
-        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\VF\ClientPerformanceManagement\DataCapture\DataBase\ClientListDB.mdf;Integrated Security=True";
+        public static string directory = getDirectory();
+        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ directory + @"\DataCapture\DataBase\ClientListDB.mdf;Integrated Security=True";
 
         public static bool NameIsUnique(string name)
         {
@@ -92,6 +93,19 @@ namespace ClientDataConsole
                 table.Load(reader);
             }
             return table;
+        }
+
+        public static string getDirectory()
+        {
+            string path = Environment.CurrentDirectory;
+            int count = 0;
+            while (count < 7) {
+                count++;
+                if (Directory.Exists(path + @"\DataCapture\DataBase"))
+                    return path;
+                path = Directory.GetParent(path).FullName;
+            }
+            return Directory.GetParent(Environment.CurrentDirectory).FullName;
         }
 
     }
