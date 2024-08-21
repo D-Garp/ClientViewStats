@@ -1,4 +1,5 @@
 ﻿using ClientDataLibrary;
+using DataCapture.LocalMethods;
 using ClientInfo = CommonModels.ClientDataModel;
 
 namespace ClientDataConsole
@@ -27,7 +28,7 @@ namespace ClientDataConsole
                 }
             }
 
-            LocalMethods.ExitApp();
+            ExitApplication.ExitApp();
         }
 
         private static void appDataCapture()
@@ -40,16 +41,16 @@ namespace ClientDataConsole
             {
 
                 clientInfo.ClientName = "";
-                LocalMethods.Warning();
+                WarnUsers.Warning();
                 Console.WriteLine("Please enter Client Name: ");
                 clientInfo.ClientName = Console.ReadLine();
 
                 //if the user entered an empty string then there is nothing to save
                 if (String.IsNullOrEmpty(clientInfo.ClientName))
-                    LocalMethods.ExitApp();
+                    ExitApplication.ExitApp();
 
                 //Check if name does not already exist in the database
-                Valid = LocalMethods.NameIsUnique(clientInfo.ClientName);
+                Valid = Validations.NameIsUnique(clientInfo.ClientName);
             }
 
             //While the date entered is invalid do this
@@ -108,7 +109,7 @@ namespace ClientDataConsole
             //save if yes
             if ("Yy".Contains(toSave))
             {
-                LocalMethods.Save(clientInfo);
+                SaveClient.Save(clientInfo);
             }
 
         }

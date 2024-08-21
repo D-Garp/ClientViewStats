@@ -145,6 +145,83 @@ GO
 ALTER DATABASE [ClientListDB] SET  READ_WRITE 
 GO
 
+USE [ClientListDB]
+GO
+/****** Object:  StoredProcedure [dbo].[spSaveClientData]    Script Date: 2024/08/21 22:54:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*******************************************************************
+Created By:			Vhutshilo Funyufuynu
+Created Date:		08 August 2024
+Modified:
+Example:			EXEC spSaveClientData @ClientName = 'Vhutshilo'
+									 , @DateRegistered = GETDATE()
+									 , @Location = 'Home'
+									 , @NumberOfUsers = 10
+
+********************************************************************/
+CREATE   PROCEDURE [dbo].[spSaveClientData]
+		@ClientName VARCHAR(255), 
+		@DateRegistered DateTime = NULL,
+		@Location VARCHAR(255) = '',
+		@NumberOfUsers Numeric(16,0) NULL
+AS
+BEGIN
+	
+	--Variables
+	DECLARE @Validations TABLE ([Message] VARCHAR(MAX))
+
+	--Validations
+	IF(NULLIF(@ClientName,'')) IS NULL
+	BEGIN
+		INSERT INTO @Validations
+		SELECT 'NO Client Name Provided'
+	END
+
+	IF(NULLIF(@Location,'')) IS NULL
+	BEGIN
+		INSERT INTO @Validations
+		SELECT 'No Location Provided'
+	END
+
+	IF(@DateRegistered IS  NULL)
+	BEGIN
+		INSERT INTO @Validations
+		SELECT 'No Date Registered Provided'
+	END
+
+	IF(ISNULL(@NumberOfUsers,0) < 1)
+	BEGIN
+		INSERT INTO @Validations
+		SELECT 'No Date Registered Provided'
+	END
+
+	--Validating
+	IF NOT EXISTS( SELECT TOP 1 1 FROM @Validations)
+	BEGIN
+		
+		INSERT INTO tblClientData (
+			[ClientName],
+			[Location],
+			[DateRegistered],
+			[NumberOfUsers]
+		)
+		SELECT @ClientName
+			 , @Location
+			 , @DateRegistered
+			 , @NumberOfUsers
+	END
+
+	--Returning table
+	SELECT * 
+	FROM @Validations
+
+END
+GO
+
+
 USE [ClientListDB] 
 GO
 SELECT
