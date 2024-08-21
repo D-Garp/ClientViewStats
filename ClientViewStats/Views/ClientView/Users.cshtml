@@ -1,11 +1,16 @@
 ﻿@model ClientViewStats.Models.UsersModel
 
+@{
+    ViewData["Title"] = "Users";
+    Layout = "_Layout";
+}
+
 <div>
-    <h4>Users</h4>
+    <h1>Users</h1>
     <hr />
     <div>
         <a href="/ClientView/Users">Refresh</a>
-        <a href="/ClientView/ClientView">Back</a>
+        <a href="/ClientView/ClientView">Clients</a>
     </div>
     <dl class="row">
         <dt class = "col-sm-2">
