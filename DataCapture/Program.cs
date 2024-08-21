@@ -1,4 +1,5 @@
-﻿using ClientInfo = Models.ClientDataModel;
+﻿using ClientDataLibrary;
+using ClientInfo = CommonModels.ClientDataModel;
 
 namespace ClientDataConsole
 {
@@ -7,26 +8,26 @@ namespace ClientDataConsole
         static void Main(string[] args)
         {
 
-
             //Console app start
             Console.WriteLine("Hi, \n Welcome Client Data Capture. \n ");
 
             //will always want user input unless userer exits
             bool exit = false;
             while (!exit) {
+
                 appDataCapture();
 
                 Console.WriteLine("Would you like to Continue adding clients?  \n please enter (Y) if yes ");
                 string toSave = Console.ReadLine();
 
-                //exit if not ye
+                //exit if not yes
                 if (!"Yy".Contains(toSave))
                 {
                     exit=true;
                 }
             }
 
-            Common.ExitApp();
+            LocalMethods.ExitApp();
         }
 
         private static void appDataCapture()
@@ -39,16 +40,16 @@ namespace ClientDataConsole
             {
 
                 clientInfo.ClientName = "";
-                Common.Warning();
+                LocalMethods.Warning();
                 Console.WriteLine("Please enter Client Name: ");
                 clientInfo.ClientName = Console.ReadLine();
 
                 //if the user entered an empty string then there is nothing to save
                 if (String.IsNullOrEmpty(clientInfo.ClientName))
-                    Common.ExitApp();
+                    LocalMethods.ExitApp();
 
                 //Check if name does not already exist in the database
-                Valid = Common.NameIsUnique(clientInfo.ClientName);
+                Valid = LocalMethods.NameIsUnique(clientInfo.ClientName);
             }
 
             //While the date entered is invalid do this
@@ -107,7 +108,7 @@ namespace ClientDataConsole
             //save if yes
             if ("Yy".Contains(toSave))
             {
-                Common.Save(clientInfo);
+                LocalMethods.Save(clientInfo);
             }
 
         }

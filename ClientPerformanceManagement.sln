@@ -5,7 +5,9 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCapture", "DataCapture\DataCapture.csproj", "{62BB8423-4A5D-45EB-B3FB-9E405AA8DC8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientViewStats", "ClientViewStats\ClientViewStats.csproj", "{7420C363-3C6E-4498-AAFB-489FD80A0C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientViewStats", "ClientViewStats\ClientViewStats.csproj", "{7420C363-3C6E-4498-AAFB-489FD80A0C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientDataLibrary", "ClientDataLibrary\ClientDataLibrary.csproj", "{80355D42-5A1C-49F1-9994-909B41A2C708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7420C363-3C6E-4498-AAFB-489FD80A0C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7420C363-3C6E-4498-AAFB-489FD80A0C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7420C363-3C6E-4498-AAFB-489FD80A0C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80355D42-5A1C-49F1-9994-909B41A2C708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80355D42-5A1C-49F1-9994-909B41A2C708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80355D42-5A1C-49F1-9994-909B41A2C708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80355D42-5A1C-49F1-9994-909B41A2C708}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

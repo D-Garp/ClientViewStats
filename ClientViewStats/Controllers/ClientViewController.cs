@@ -1,7 +1,6 @@
-﻿using ClientDataConsole;
+﻿using ClientDataLibrary;
 using ClientViewStats.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.AccessControl;
@@ -10,6 +9,7 @@ namespace ClientViewStats.Controllers
 {
     public class ClientViewController : Controller
     {
+        #region CONTROLLER METHODS
         //using sql connection to get all the data as SQL is more structured 
         public IActionResult ClientView()
         {
@@ -26,27 +26,8 @@ namespace ClientViewStats.Controllers
         public IActionResult Locations() 
         {
             var Locations = new List<LocationsModel>();
-            DataTable table = new DataTable();
-
             //Get data from view
-            string sqlcom = "SELECT * FROM vwLocations";
-            using (SqlConnection sqlcon = new SqlConnection(Common.connetionString)) 
-            {
-                sqlcon.Open();
-                table = Common.GetDataTable(sqlcon, sqlcom);
-
-                foreach (DataRow row in table.Rows)
-                {
-
-                    LocationsModel LocationViewModel = new LocationsModel();
-                    LocationViewModel.Location = row["Location"].ToString();
-                    LocationViewModel.Clients = row["Clients"].ToString();
-                    LocationViewModel.Users = Int32.Parse(row["Users"].ToString());
-
-                    Locations.Add(LocationViewModel);
-
-                }
-            }
+            Locations = LocationGridData();
 
             return View(Locations); 
         }
@@ -55,27 +36,8 @@ namespace ClientViewStats.Controllers
         public IActionResult Registration()
         {
             var Registration = new List<RegistrationModel>();
-            DataTable table = new DataTable();
-
-            //Get data from view
-            string sqlcom = "SELECT * FROM vwRegistrationDate";
-            using (SqlConnection sqlcon = new SqlConnection(Common.connetionString))
-            {
-                sqlcon.Open();
-                table = Common.GetDataTable(sqlcon, sqlcom);
-
-                foreach (DataRow row in table.Rows)
-                {
-
-                    RegistrationModel RegistrationViewModel = new RegistrationModel();
-                    RegistrationViewModel.RegistrationDate = (DateTime.Parse(row["DateRegistered"].ToString())).ToShortDateString();
-                    RegistrationViewModel.Clients = row["Clients"].ToString();
-                    RegistrationViewModel.Users = Int32.Parse(row["Users"].ToString());
-
-                    Registration.Add(RegistrationViewModel);
-
-                }
-            }
+            //get data per registration date
+            Registration = RegistrationGridData();
 
             return View(Registration);
         }
@@ -100,6 +62,9 @@ namespace ClientViewStats.Controllers
             return View(UsersModel);
         }
 
+        #endregion
+
+        #region PRIVATE METHODS
         //get grid data for clients table 
         private List<ClientViewModel> GridData() {
 
@@ -129,5 +94,62 @@ namespace ClientViewStats.Controllers
             return Clients;
         }
 
+        private List<LocationsModel> LocationGridData()
+        {
+            List<LocationsModel> Locations = new List<LocationsModel>();
+            DataTable table = new DataTable();
+
+            string sqlcom = "SELECT * FROM vwLocations";
+            using (SqlConnection sqlcon = new SqlConnection(Common.connetionString))
+            {
+                sqlcon.Open();
+                table = Common.GetDataTable(sqlcon, sqlcom);
+            }
+
+            foreach (DataRow row in table.Rows)
+            {
+
+                LocationsModel LocationViewModel = new LocationsModel();
+                LocationViewModel.Location = row["Location"].ToString();
+                LocationViewModel.Clients = row["Clients"].ToString();
+                LocationViewModel.Users = Int32.Parse(row["Users"].ToString());
+
+                Locations.Add(LocationViewModel);
+            }
+            return Locations;
+
+        }
+
+        private List<RegistrationModel> RegistrationGridData() 
+        {
+
+            List<RegistrationModel> Registration = new List<RegistrationModel>();
+            DataTable table = new DataTable();
+
+            //Get data from view
+            string sqlcom = "SELECT * FROM vwRegistrationDate";
+            using (SqlConnection sqlcon = new SqlConnection(Common.connetionString))
+            {
+                sqlcon.Open();
+                table = Common.GetDataTable(sqlcon, sqlcom);
+
+                foreach (DataRow row in table.Rows)
+                {
+
+                    RegistrationModel RegistrationViewModel = new RegistrationModel();
+                    RegistrationViewModel.RegistrationDate = (DateTime.Parse(row["DateRegistered"].ToString())).ToShortDateString();
+                    RegistrationViewModel.Clients = row["Clients"].ToString();
+                    RegistrationViewModel.Users = Int32.Parse(row["Users"].ToString());
+
+                    Registration.Add(RegistrationViewModel);
+
+                }
+            }
+
+            return Registration;
+        }
+
+
+        #endregion
     }
 }
